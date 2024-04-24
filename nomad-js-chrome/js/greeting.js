@@ -17,8 +17,6 @@ const paintGreetings = () => {
     const username = localStorage.getItem(USERNAME_KEY);
     greeting.innerText = `Good Morning ${username}`;
     greeting.classList.remove(HIDDEN_CLASS);
-
-    resetBtn.classList.remove(HIDDEN_CLASS);
 };
 
 const savedUsername = localStorage.getItem(USERNAME_KEY);
