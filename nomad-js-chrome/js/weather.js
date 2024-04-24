@@ -1,4 +1,4 @@
-import API_Key from './config';
+import API_Key from '../config';
 
 function onGeoSuccess (position){
     const lat = position.coords.latitude; 
