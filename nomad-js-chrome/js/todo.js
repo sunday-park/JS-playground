@@ -6,19 +6,29 @@ const toDoList = document.getElementById("todo-list");
 let toDos = [];
 const TODOS_KEY = "todos";
 
-
 const todoHandler = {
+    saveToDo: () => {
+        localStorage.setItem("todos", JSON.stringify(toDos));
+    },
     deleteToDo: (event) => {
         const li = event.currentTarget.parentElement;
+        console.log(toDos);
+        console.log(li.id);
+        toDos = toDos.filter((toDo) => toDo.id != parseInt(li.id) )
+        console.log(toDos);
+
+        // localStorage.removeItem();
         li.remove();
+        todoHandler.saveToDo()
     },
 
     paintToDo: (newTodo) => {
         const li = document.createElement("li");
+        li.id = newTodo.id;
         const span = document.createElement("span");
-        span.innerText = newTodo;
+        span.innerText = newTodo.text;
         const button = document.createElement("button");
-        button.innerText = "―";
+        button.innerText = "X";
     
         button.addEventListener('click', todoHandler.deleteToDo);
     
@@ -27,17 +37,17 @@ const todoHandler = {
         toDoList.appendChild(li);
     },
 
-    saveToDo: () => {
-        localStorage.setItem("todos", JSON.stringify(toDos));
-    },
-
     handleToDoSubmit: (event) => {
         event.preventDefault();
         const newTodo = toDoInput.value;
         toDoInput.value ="";
-        toDos.push(newTodo);
-        todoHandler.paintToDo(newTodo);
-        todoHandler.saveToDo();
+        const newTodoObj = {
+            id: Date.now(), 
+            text: newTodo,
+        };
+        toDos.push(newTodoObj);
+        todoHandler.paintToDo(newTodoObj);
+        todoHandler.saveToDo(newTodoObj);
     },
 }
 
