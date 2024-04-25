@@ -4,15 +4,18 @@ const ctx = canvas.getContext("2d"); // ctx = paint brush
 canvas.width = 800;
 canvas.height = 800;
 
-ctx.fillRect(200, 200, 50, 200)
-ctx.fillRect(400, 200, 50, 200)
-ctx.lineWidth = 2;
-ctx.fillRect(300, 300, 50, 100)
-ctx.fillRect(200, 200, 200, 10)
+ctx.fillRect(220 - 50, 200, 15, 100)
+ctx.fillRect(340 - 50, 200, 15, 100)
+ctx.fillRect(260 - 50, 200, 60, 100)
 
-ctx.moveTo(200, 200)
-ctx.lineTo(325, 100)
-ctx.lineTo(450, 200)
-ctx.fill();
+// 호(arc) -> arc(x, y, radius, startAngle, endAngle, anticlockwise)
+ctx.arc(290 - 50, 150, 35, 0, 2 * Math.PI)
+ctx.fill()
+
+ctx.beginPath();
+ctx.fillStyle = "white"
+ctx.arc(275 - 50, 145, 8, Math.PI, 2 * Math.PI)
+ctx.arc(308 - 50, 145, 8, Math.PI, 2 * Math.PI)
+ctx.fill()
 
 
