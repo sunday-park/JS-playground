@@ -4,17 +4,14 @@ const ctx = canvas.getContext("2d"); // ctx = paint brush
 canvas.width = 800;
 canvas.height = 800;
 
-// short-cut function : 사각형 채우기 / 비우기(only border)
-// fillRect / strokeRect (x,y,w,h)
-ctx.rect(50, 50, 100, 100);
-ctx.rect(150, 150, 100, 100);
-ctx.rect(250, 250, 100, 100);
-ctx.fill();
+ctx.moveTo(50, 50) // 시작 위치를 x,y로 이동
+ctx.lineTo(150, 50) // 선을 그을거임 넓이 to 위치(높이)
+ctx.lineTo(150, 150)
+ctx.lineTo(50, 150)
+ctx.lineTo(50, 50)
+ctx.stroke() // 실제로 선을 그음
+ctx.fill() // 실제로 색을 채움
 
-// 새로운 경로(path) 생성, 이전 경로와 연결 끊어짐
-ctx.beginPath();
-ctx.rect(350, 350, 100, 100);
-ctx.fillStyle = "red";
-ctx.fill();
+
 
 
