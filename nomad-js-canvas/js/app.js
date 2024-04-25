@@ -4,14 +4,15 @@ const ctx = canvas.getContext("2d"); // ctx = paint brush
 canvas.width = 800;
 canvas.height = 800;
 
-ctx.moveTo(50, 50) // 시작 위치를 x,y로 이동
-ctx.lineTo(150, 50) // 선을 그을거임 넓이 to 위치(높이)
-ctx.lineTo(150, 150)
-ctx.lineTo(50, 150)
-ctx.lineTo(50, 50)
-ctx.stroke() // 실제로 선을 그음
-ctx.fill() // 실제로 색을 채움
+ctx.fillRect(200, 200, 50, 200)
+ctx.fillRect(400, 200, 50, 200)
+ctx.lineWidth = 2;
+ctx.fillRect(300, 300, 50, 100)
+ctx.fillRect(200, 200, 200, 10)
 
-
+ctx.moveTo(200, 200)
+ctx.lineTo(325, 100)
+ctx.lineTo(450, 200)
+ctx.fill();
 
 
