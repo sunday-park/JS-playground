@@ -1,33 +1,43 @@
 const canvas = document.querySelector("canvas");
-const ctx = canvas.getContext("2d"); // ctx = paint brush
-// css에서 canvas 크기 설정 후, script에도 크기를 알려주어야 한다.
+const lineWidth = document.querySelector("#line-width");
+const ctx = canvas.getContext("2d");
+
 canvas.width = 800;
 canvas.height = 800;
+ctx.lineWidth = lineWidth.value;
+let isPainting = false;
+// 목표: 마우스 드래그로 선을 그리기
 
-ctx.lineWidth = 2;
+// 마우스가 움직이기 시작 할때마다 moveTo(선이 시작히는 위치)를 호출해야 함
+    // click: 마우스를 짧게 눌렀다 '떼는 것'
+    // mousedown: 마우스를 클릭한채 누르고 있는 것
+    // mouseup: (마우스를 누르고 있다가) 떼었을 때
+    // mousemove: 마우스의 움직임
+// 마우스의 클릭이 떼어질 때 lineTo(선이 끝나는 위치)가 호출되어야 함
 
-const colors = [
-    "#f03e3e",
-    "#e64980",
-    "#be4bdb",
-    "#7950f2",
-    "#4c6ef5",
-    "#228be6",
-    "#15aabf",
-    "#12b886",
-    "#40c057",
-    "#82c91e",
-    "#fab005",
-    "#fd7e14"
-]
-
-function onclick(event) {
-    // console.log(`X: ${event.offsetX}, Y: ${event.offsetY}`);
-    ctx.beginPath(); // 1개의 선마다 path를 끊어줌
-    ctx.moveTo(0, 0);
-    const color = colors[Math.floor(Math.random() * colors.length)]
-    ctx.lineTo(event.offsetX, event.offsetY);
-    ctx.strokeStyle = color;
-    ctx.stroke();
+function onMove(event) {
+    if (isPainting){
+        ctx.lineTo(event.offsetX, event.offsetY);
+        ctx.stroke()
+        return;
+    }
+    ctx.moveTo(event.offsetX, event.offsetY);
 }
-canvas.addEventListener("mousemove", onclick);
+function startPainting() {
+    isPainting = true;
+}
+function cancelPainting() {
+    isPainting = false;
+    ctx.beginPath(); // 선을 끝내는 지점에 path를 끊어준다.
+}
+
+function onlineWidthChange(event) {
+    ctx.lineWidth = event.target.value;
+}
+
+canvas.addEventListener("mousemove", onMove)
+canvas.addEventListener("mousedown", startPainting)
+canvas.addEventListener("mouseup", cancelPainting)
+canvas.addEventListener("mouseleave", cancelPainting)
+
+lineWidth.addEventListener("change", onlineWidthChange)
