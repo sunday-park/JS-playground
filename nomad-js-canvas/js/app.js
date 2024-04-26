@@ -34,6 +34,7 @@ const startPainting = () => {
 }
 const cancelPainting = () => {
     isPainting = false;
+    // ctx.fill(); // 라인 채우기
     ctx.beginPath();
 }
 const onlineWidthChange = (event) => {
