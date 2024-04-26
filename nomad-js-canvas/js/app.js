@@ -4,18 +4,30 @@ const ctx = canvas.getContext("2d"); // ctx = paint brush
 canvas.width = 800;
 canvas.height = 800;
 
-ctx.fillRect(220 - 50, 200, 15, 100)
-ctx.fillRect(340 - 50, 200, 15, 100)
-ctx.fillRect(260 - 50, 200, 60, 100)
+ctx.lineWidth = 2;
 
-// 호(arc) -> arc(x, y, radius, startAngle, endAngle, anticlockwise)
-ctx.arc(290 - 50, 150, 35, 0, 2 * Math.PI)
-ctx.fill()
+const colors = [
+    "#f03e3e",
+    "#e64980",
+    "#be4bdb",
+    "#7950f2",
+    "#4c6ef5",
+    "#228be6",
+    "#15aabf",
+    "#12b886",
+    "#40c057",
+    "#82c91e",
+    "#fab005",
+    "#fd7e14"
+]
 
-ctx.beginPath();
-ctx.fillStyle = "white"
-ctx.arc(275 - 50, 145, 8, Math.PI, 2 * Math.PI)
-ctx.arc(308 - 50, 145, 8, Math.PI, 2 * Math.PI)
-ctx.fill()
-
-
+function onclick(event) {
+    // console.log(`X: ${event.offsetX}, Y: ${event.offsetY}`);
+    ctx.beginPath(); // 1개의 선마다 path를 끊어줌
+    ctx.moveTo(0, 0);
+    const color = colors[Math.floor(Math.random() * colors.length)]
+    ctx.lineTo(event.offsetX, event.offsetY);
+    ctx.strokeStyle = color;
+    ctx.stroke();
+}
+canvas.addEventListener("mousemove", onclick);
