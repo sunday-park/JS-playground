@@ -3,6 +3,9 @@ const lineWidth = document.querySelector("#line-width");
 const modeBtn = document.getElementById("mode-btn");
 const resetBtn = document.getElementById("reset-btn");
 const eraserBtn = document.getElementById("eraser-btn");
+const fileInput = document.getElementById("file");
+const textInput = document.getElementById("text");
+const saveBtn = document.getElementById("save");
 
 const color = document.getElementById("color");
 const colorOptions = Array.from(document.getElementsByClassName("color-option"));
@@ -14,6 +17,7 @@ canvas.width = CANVAS_WIDTH;
 canvas.height = CANVAS_HEIGHT;
 
 ctx.lineWidth = lineWidth.value;
+ctx.lineCap = "round";
 let isPainting = false;
 let isFilling = false;
 
@@ -52,6 +56,27 @@ const onCanvasModeClick = () => {
         ctx.stroke();
     }
 }
+const onFileChange = (event) => {
+    const file = event.target.files[0];
+    const url = URL.createObjectURL(file);
+    console.log(url);
+    const image = new Image(); // script로 <img src=""/>를 생성하는 Image객체 
+    image.src = url;
+    image.onload = () => {
+        ctx.drawImage(image, 0, 0, CANVAS_WIDTH, CANVAS_HEIGHT);
+        fileInput.value = null;
+    }
+}
+const onDoubleClick = (event) => {
+    const text = textInput.value;
+    if (text !== ""){
+        ctx.save(); // 해당 코드 실행전의 상태와 선택을 저장함
+        ctx.lineWidth = 1;
+        ctx.font = "bold 80px sans";
+        ctx.fillText(text, event.offsetX, event.offsetY);
+        ctx.restore(); // save로 저장한 내용을 다시 복구함
+    }
+}
 
 modeBtn.addEventListener("click", () => {
     if (isFilling !== true){
@@ -72,12 +97,17 @@ eraserBtn.addEventListener("click", () => {
     modeBtn.innerText = "Fill";
 });
 
+
+canvas.addEventListener("dblclick", onDoubleClick)
 canvas.addEventListener("mousemove", onMove);
 canvas.addEventListener("mousedown", startPainting);
 canvas.addEventListener("mouseup", cancelPainting);
 canvas.addEventListener("mouseleave", cancelPainting);
 canvas.addEventListener("click", onCanvasModeClick); //
 
+
 lineWidth.addEventListener("change", onlineWidthChange);
 color.addEventListener("change", onColorChange);
 colorOptions.forEach(color => color.addEventListener("click", onColorClick));
+
+fileInput.addEventListener("change", onFileChange);
