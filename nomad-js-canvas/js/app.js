@@ -96,7 +96,13 @@ eraserBtn.addEventListener("click", () => {
     isFilling = false;
     modeBtn.innerText = "Fill";
 });
-
+saveBtn.addEventListener("click", () => {
+    const url = canvas.toDataURL() // canvas안의 image를 인코딩된 URL로 보여준다
+    const a = document.createElement("a");
+    a.href = url;
+    a.download = `myDrawing_${Date.now()}.png`;
+    a.click();
+})
 
 canvas.addEventListener("dblclick", onDoubleClick)
 canvas.addEventListener("mousemove", onMove);
